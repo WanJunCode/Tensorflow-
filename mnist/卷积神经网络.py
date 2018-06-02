@@ -75,8 +75,8 @@ with tf.Session() as sess:
     train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
     if i % 100 == 0:
-      feed_dict = { x: batch[0], y_: batch[1], keep_prob: 1.0 }
       # 测试准确率的时候 设置 keep_prob = 1
+      feed_dict = { x: batch[0], y_: batch[1], keep_prob: 1.0 }
       train_accuracy = accuracy.eval(feed_dict=feed_dict)
       print("step %d, training accuracy %g" % (i, train_accuracy))
 
