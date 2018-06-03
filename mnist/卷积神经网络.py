@@ -67,18 +67,21 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
 
 
 with tf.Session() as sess:
-  tf.global_variables_initializer().run()
+    tf.global_variables_initializer().run()
 
-  for i in range(20000):
-    batch = mnist.train.next_batch(50)
-    # 训练
-    train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
+    for i in range(5000):
+        batch = mnist.train.next_batch(50)
+        # 训练
+        train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
-    if i % 100 == 0:
-      # 测试准确率的时候 设置 keep_prob = 1
-      feed_dict = { x: batch[0], y_: batch[1], keep_prob: 1.0 }
-      train_accuracy = accuracy.eval(feed_dict=feed_dict)
-      print("step %d, training accuracy %g" % (i, train_accuracy))
+        if i % 100 == 0:
+        # 测试准确率的时候 设置 keep_prob = 1
+            feed_dict = { x: batch[0], y_: batch[1], keep_prob: 1.0 }
+            train_accuracy = accuracy.eval(feed_dict=feed_dict)
+            print("step %d, training accuracy %g" % (i, train_accuracy))
 
-  feed_dict = { x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0 }
-  print("test accuracy %g" % accuracy.eval(feed_dict=feed_dict))
+    feed_dict = { x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0 }
+    print("test accuracy %g" % accuracy.eval(feed_dict=feed_dict))
+
+    summary_writer = tf.summary.FileWriter("D://sample//mnist__conv//mnist_log", sess.graph)
+    summary_writer.close()
